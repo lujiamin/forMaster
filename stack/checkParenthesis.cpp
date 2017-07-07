@@ -35,7 +35,7 @@ void check(){
 		}
 	}
 	if(st.empty()){
-		printf("it's ok.\n");
+		printf("∆•≈‰\n");
 	}else{
 		printf("»±∑¶”“¿®∫≈\n");
 	}
