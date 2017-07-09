@@ -12,6 +12,7 @@ public:
 	int modifiedFind(int i)const;
 	void modifiedUnion(int x,int y);
 	int getParent(int i);
+	void divideByEqual(int x,int y);
 private:
 	int *parent;
 	int size;	
@@ -59,6 +60,12 @@ void UFSet::modifiedUnion(int x,int y){
 int UFSet::getParent(int i){
 	return parent[i];
 }
+//按等价关系分组
+void UFSet::divideByEqual(int x,int y){
+	if(Find(x)!=Find(y)){
+		Union(x,y);
+	}
+}
 int main(int argc, char const *argv[]){
 	printf("%s\n","Union-Find Set");
 	UFSet uf(7);
@@ -78,5 +85,25 @@ int main(int argc, char const *argv[]){
 	printf("%d\'s root is %d\n",3, uf2.modifiedFind(3));
 	printf("%d\'s root is %d\n",5, uf2.modifiedFind(5));
 	printf("%d\'s parent is %d\n",2, uf2.getParent(2));
+
+	printf("%s\n","divide by equality");
+	UFSet uf3(7);
+	uf3.divideByEqual(0,1); //0和1是等价关系，被分在同一棵树中
+	uf3.divideByEqual(2,3);
+	uf3.divideByEqual(3,1);
+	uf3.divideByEqual(4,5);
+	uf3.divideByEqual(6,5);
+	printf("%d\n",uf3.Find(2));
+	printf("%d\n",uf3.Find(0));
+	printf("%d\n",uf3.Find(3));
+	printf("%d\n",uf3.getParent(1));
+	printf("%d\n",uf3.getParent(0));
+	printf("%d\n",uf3.getParent(3));
+	printf("%d\n",uf3.Find(6));
+	printf("%d\n",uf3.Find(4));
+	printf("%d\n",uf3.Find(5));
+	printf("%d\n",uf3.getParent(4));
+	printf("%d\n",uf3.getParent(5));
+	printf("%d\n",uf3.getParent(6));
 	return 0;
 }
