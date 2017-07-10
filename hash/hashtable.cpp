@@ -45,7 +45,7 @@ Status SearchHash(HashTable H,int key,int *addr){
 	*addr = Hash(key);//计算key应该在散列表中的位置
 	while(H.elem[*addr] != key){
 		*addr = (*addr+1) % m;
-		if(H.elem[*addr] == NULLKEY || *addr == Hash(key)){//为空后者循环回到原点
+		if(H.elem[*addr] == NULLKEY || *addr == Hash(key)){//为空或者循环回到原点
 			return UNSUCCESS;
 		}
 	}
