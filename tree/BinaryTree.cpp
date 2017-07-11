@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <queue>
+#include <vector>
+using namespace std;
 #define TelemType char
 
 //the node
@@ -55,6 +58,43 @@ void PostOrder(BiTree T){
     printf("%c ",T->data);
 }
 
+//LevelOrder,use queue to save each node
+void LevelOrder(BiTree T){
+    queue<BiTree> q;
+    if(T != NULL){
+        q.push(T);
+    }
+    BiTree b;
+    while(!q.empty()){
+        b = q.front();//get the front of queue
+        printf("%c ", b->data);
+        q.pop();//pop the front 
+        if(b->lchild)
+            q.push(b->lchild);
+        if(b->rchild)
+            q.push(b->rchild);
+    }
+}
+
+//LevelOrder2,use vector
+void LevelOrder2(BiTree T){
+    std::vector<BiTNode *> v;
+    v.push_back(T);
+    int cur = 0;//means the current node
+    int end = 1;//means the next node of end node (+1)
+    while(cur < v.size()){
+        end = v.size();
+        while(cur < end){
+            printf("%c ", v[cur]->data);
+            if(v[cur]->lchild)
+                v.push_back(v[cur]->lchild);
+            if(v[cur]->rchild)
+                v.push_back(v[cur]->rchild);
+            cur ++;
+        }
+    }
+}
+
 //get height of the tree
 int getHight(BiTree T){
     if(T == NULL){
@@ -65,6 +105,9 @@ int getHight(BiTree T){
     return (leftH >= rightH) ? leftH+1 : rightH+1;
 }
 int main(){
+    /*
+    test tree : AB#EJ###C#G##
+    */
     BiTree tree;
     printf("%s\n", "input the PreOrder of tree('#' means null pointer): ");
     CreateBiTreeByPreOrder(&tree);
@@ -75,7 +118,11 @@ int main(){
     InOrder(tree);
     printf("\n%s", "postorder:");
     PostOrder(tree);
+    printf("\nthe hight of tree is:%d\n",getHight(tree));
+    printf("%s", "LevelOrder(use queue):");
+    LevelOrder(tree);
+    printf("\nLevelOrder(use vector):");
+    LevelOrder2(tree);
     printf("\n");
-    printf("the hight of tree is:%d\n",getHight(tree));
     return 0;
 }
