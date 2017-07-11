@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+#include <cstdlib>
 using namespace std;
 
 #define SUCCESS 1
@@ -51,7 +52,7 @@ Status SearchHash(HashTable H,int key,int *addr){
 	}
 	return SUCCESS;
 }
-void main(int argc, char const *argv[]){
+int main(int argc, char const *argv[]){
 	HashTable H,*p;
 	p = &H;//将结构体变量的地址赋值给结构体指针
 	InitHashTable(p);
@@ -72,5 +73,5 @@ void main(int argc, char const *argv[]){
 	cout<<"(0:not exist  1:exist):"<<SearchHash(H,pos,addr)<<endl;
 	//addr指的是pos应该在的位置
 	cout<<*addr<<endl;
-	return;
+	return 0;
 }
