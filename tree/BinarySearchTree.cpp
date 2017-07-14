@@ -16,7 +16,7 @@ void InitTree(BinSearchTree &T){
 // search the binary search
 int Search(BinSearchTree &T,elemType e){
 	if(!T){
-		return 0;
+        return 0;
 	}
 	// if equal ,return 1
 	if(T->data == e){
