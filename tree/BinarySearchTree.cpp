@@ -18,7 +18,7 @@ int Search(BinSearchTree &T,elemType e){
 	if(!T){
 		return 0;
 	}
-	// if equal ,return the node T
+	// if equal ,return 1
 	if(T->data == e){
 		return 1;
 	}else if(T->data > e){
