@@ -37,6 +37,7 @@ int search_last_k(LinkedList &L,int k){
     LNode *p = L->next,*q = L->next;
     int count = 0;
     while(p!=NULL){
+        // printf("%d  %d\n", p->data,q->data);
         if(count < k){
             count++;
         }else{
