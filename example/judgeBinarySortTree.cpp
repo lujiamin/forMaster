@@ -24,7 +24,7 @@ bool verify(int *seq,int len){
     // right child tree
     bool right = true;
     if(i<len-1){
-        right = verify(seq+i-1,len-i);
+        right = verify(seq+i,len-i-1);
     }
     return (left && right);
 }
