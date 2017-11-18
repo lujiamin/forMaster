@@ -5,8 +5,8 @@ typedef struct Node{
     Node *right;
     Node *left;
 }Node,*BSTree;
+static int leaf_num = 0;
 
-// 向二叉排序树中插入元素
 int insert(BSTree &root,int e){    
     if(root == NULL){
         root = new Node;
@@ -25,7 +25,6 @@ int insert(BSTree &root,int e){
     }
 }
 
-// 创建二叉排序树
 void create(BSTree &root,int elem[],int n){
     int i=0;
     while(i<n){
@@ -34,7 +33,6 @@ void create(BSTree &root,int elem[],int n){
     }
 }
 
-// 先序遍历
 void preOrder(BSTree &root){
     if(root){
         cout<<root->data<<" ";
@@ -43,7 +41,6 @@ void preOrder(BSTree &root){
     }
 }
 
-//中序遍历
 void inOrder(BSTree &root){
     if(root){
         inOrder(root->left);
@@ -52,15 +49,37 @@ void inOrder(BSTree &root){
     }
 }
 
+void leafNum(BSTree &root){
+    if(root->left == NULL && root->right == NULL){
+        leaf_num ++;
+    }
+    if(root->left){
+        leafNum(root->left);        
+    }
+    if(root->right){
+        leafNum(root->right);
+    }
+}
+
+int nodeNum(BSTree &root){
+    if(root == NULL){
+        return 0;
+    }else
+		return 1+nodeNum(root->left)+nodeNum(root->right);
+}
+
 int main(){
     BSTree root = NULL;
-    int elem[] = {5,8,3,6,9,4};
-    int n = 6;
+    int elem[] = {5,8,3,6,9,4,2,12};
+    int n = 8;  
     create(root,elem,n);
-    cout<<"create done\n先序遍历";
+    cout<<"create done\n";
     preOrder(root);
-    cout<<"\n中序遍历";
+    cout<<"\n";
     inOrder(root);
     cout<<"\n";
+    leafNum(root);
+    cout<<leaf_num<<"\n";
+    cout<<nodeNum(root)<<"\n";
     return 0;
 }
