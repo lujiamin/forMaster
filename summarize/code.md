@@ -90,4 +90,38 @@ Node *reverse(Node *p,Node *m){
     return q;
 }
 //时间复杂度 O(n)
+```  
+#### 4  
+链表结点  
+```
+struct nextNode{
+    int data;
+    int fre;
+    struct nextNode *next;
+}
+```  
+所有结点按fre递减链接，fre为该结点访问次数，初始为0,编写一个查找函数，查找与给定值相等的结点，如果找到，相应的fre 加一，然后将他前移至与结点fre相等的结点的后面。
+算法思想：设置三个指针，p作为检测指针，顺序检测，pre跟在p后面，移动结点的时候用。设q指针用于记录fre改变的结点位置，插入p的时候使用.  
+```
+bool organize(nextNode *f,int value,nextNode *&p){
+    nextNode *pre,*q;
+    p = f->next;
+    q = pre = f;
+    while(p != NULL && P->data != value){
+        if(pre != f && pre->fre > p->fre){
+            q = pre;
+        }
+        pre = p;
+        p = p->next;
+    }
+    if(p = NULL){
+        return false;
+    }
+    // 移动结点
+    p->fre++;
+    pre->next = p->next;
+    p->next = q->next;
+    q->next = p;
+    return true; 
+}
 ```
