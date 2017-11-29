@@ -55,4 +55,39 @@ bool verify(int seq[],int length){
     }
     return (left && right);
 }
+```  
+#### 三  
+二叉排序树，结点结构(lchild，rchild，data),给定一个递增有序的二叉排序树(前序遍历得递增)，根结点为root，求使该二叉排序树转变为递减的二叉排序树(前序遍历)，返回根节点指针  
+算法思想：递归处理左右子树  
+```
+struct Node{
+    int data;
+    Node *lchild;
+    Node *rchild;
+}
+Node *reverse(Node *p,Node *m){
+    Node *l,*r,*lm,*rm;
+    if(p->rchild != NULL){
+        r = reverse(p->rchild,rm);
+    }
+    if(p->lchild != NULL){
+        l = reverse(p->lchils,lm);
+    }
+    Node *q = (Node *)malloc(sizeof(Node));
+    q->data = p->data;
+    q->lchild = q->rchild = NULL;
+    m = q;
+    if(r != NULL){
+        if(l != NULL)
+            rm->lchild = l;
+        rm->rchild = q;
+        return r;
+    }
+    if(l != NULL){
+        lm->lchild = q;
+        return l;
+    }
+    return q;
+}
+//时间复杂度 O(n)
 ```
