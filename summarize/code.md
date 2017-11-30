@@ -91,7 +91,7 @@ Node *reverse(Node *p,Node *m){
 }
 //时间复杂度 O(n)
 ```  
-#### 4  
+#### 四  
 链表结点  
 ```
 struct nextNode{
@@ -123,5 +123,143 @@ bool organize(nextNode *f,int value,nextNode *&p){
     p->next = q->next;
     q->next = p;
     return true; 
+}
+```  
+#### 五  
+一个升序整数数组{1,2,4,7,11,15}以及一个整数15，可以找到4+11=15，实现查找这两个数的算法，尽可能高效.输出任意一对.  
+算法思想：从前和后依次向中间移动，和相等时正好符合题意.  
+```
+bool find(int a[],int len,int sum){
+    bool found = false;
+    if(len < 1){
+        return found;
+    }
+    int start = 0;
+    int end = len-1;
+    while(start < end){
+        int curSum = a[start] + a[end];
+        if(curSUm == sum){
+            printf("%d  %d",a[start],a[end]);
+            found = true;
+            break;
+        }else if(curSum > sum){
+            end--;
+        }else{
+            start++;
+        }
+    }
+    return found;
+    //时间复杂度O(n)
+}
+```  
+#### 六  
+设有向无环图G以邻接矩阵方式存储，G[i][j]存放的是从结点i到结点j的边权，G[i][j]=0代表没有直接边，编写程序，求G中最长的路径长度.  
+算法思想：运用弗洛伊德(floyd)算法，将全部边权取相反数后为负数.  
+```
+int floyd(int a[][]){
+    int dist[n][n];
+    //取反
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            dist[i][j]=-a[i][j];
+        }
+    }
+    for(int k=0;k<n;k++){
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(dist[i][j] > dist[i][k]+dist[k][j]){
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                }
+            }
+        }
+    }
+    //找到最小的取反即是最长路径
+    int max = 0;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            if(max < -dist[i][j]){
+                max = -dist[i][j];
+            }
+        }
+    }
+    return max;
+}
+//时间复杂度O(n^3)
+```  
+同样的思想可用于求图的闭包(两个结点之间是否相通)
+#### 七  
+加入一个关键字到最大堆中，调整最大堆  
+算法思想：从标号为[n/2]开始向上，对每个结点和左右子树进行调整，最开始需要判断n是左结点还是右结点，之后的结点，左右子树都有，无需判断.  
+```
+int k[n];  
+void heap(){
+    int i = n/2;
+    if(n%2 == 1){
+        if(k[i] < k[n-1] && k[n-1] > k[n]){
+            swap(k[n-1],k[i]);
+        }
+        if(k[i] < k[n] && k[n-1] < k[n]){
+            swap(k[n],k[i]);
+        }
+    } //右结点
+    else{
+        if(k[i] < k[n]){
+            swap(k[i],k[n]);
+        }
+    }
+    i = i/2;
+    while(i>0){
+        if(k[i] < k[n-1] && k[n-1] > k[n]){
+            swap(k[n-1],k[i]);
+        }
+        if(k[i] < k[n] && k[n-1] < k[n]){
+            swap(k[n],k[i]);
+        }
+        i = i/2;
+    }
+}
+//时间复杂度O(log2(n))
+```  
+#### 八  
+将一个带头结点的循环双链表 L=(a1,a2,....an),改造成 L=(a1,a3....an,...a4,a2);  
+算法思想：保留奇数号结点，偶数号结点采用头插法插入到另外一个不带头结点的循环双链表s中，最后将两个链表相连.  
+```
+// 画图理解，指针结点很复杂
+void modify(struct node *head){
+    struct node *s = NULL;//偶结点链表
+    struct node *l = head;
+    struct node *p = l->next,*p1;
+    l->next = l->pre = NULL;
+    for(;p != l;p=p1){
+        if(p->next != l){
+            p1 = p->next;
+            p->next = p1->next;
+            p1->next->pre = p;
+        }
+        if(s == NULL){
+            s = p1;
+            p1->next = p1->pre = p1;
+        }else{
+            p1->next = s;
+            p1->pre = s->pre;
+            s->pre->next = p1;
+            s->pre = p1;
+            s = s->pre;
+        }
+    }
+    p1 = p->next;
+    l->pre->next = p;
+    p->next = l;
+    p->pre = l->pre;
+    l->pre = p;
+    // 合并两个链表
+    if(s == NULL){
+        return;
+    }
+    p = s->pre;
+    p->next = l;
+    l->pre->next = s;
+    s->pre = l->pre;
+    l->pre = p;
 }
 ```
